@@ -45,10 +45,14 @@ public class User {
      * @return True, если данные пользователя полные, false в противном случае.
      */
     public boolean verificationPersonalData() {
-        return Name != null && Surname != null && PassportId > 0 && Address != null;
+        if (PassportId <= 0)
+            return false;
+        if (Address == null || Address.isEmpty())
+            return false;
+        return Name != null && Surname != null;
     }
 
-    void setAddress(String address) {
+    public void setAddress(String address) {
         Address = address;
     }
 
@@ -56,7 +60,7 @@ public class User {
         listCardId.add(card);
     }
 
-    void setPassportId(int passportId) {
+    public void setPassportId(int passportId) {
         PassportId = passportId;
     }
 }
