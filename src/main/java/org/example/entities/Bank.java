@@ -137,10 +137,12 @@ public class Bank implements IObserver {
      * @param userId       UUID пользователя, которому принадлежит кредитная карта
      * @throws Exception если пользователь с указанным UUID не найден
      */
-    public void addCreditCard(LocalDateTime dateTime, double startBalance, UUID userId) throws Exception {
-        listCreditCards.add(new CreditCard(dateTime, startBalance, findUser(userId).verificationPersonalData()));
+    public CreditCard addCreditCard(LocalDateTime dateTime, double startBalance, UUID userId) throws Exception {
+        CreditCard creditCard = new CreditCard(dateTime, startBalance, findUser(userId).verificationPersonalData());
+        listCreditCards.add(creditCard);
         listCards.add(listCreditCards.get(listCreditCards.size() - 1));
         findUser(userId).addCard(listCards.get(listCards.size() - 1).getId());
+        return creditCard;
     }
 
     /**
@@ -151,10 +153,12 @@ public class Bank implements IObserver {
      * @param userId       UUID пользователя, которому принадлежит дебетовая карта
      * @throws Exception если пользователь с указанным UUID не найден
      */
-    public void addDebitCard(LocalDateTime dateTime, double startBalance, UUID userId) throws Exception {
-        listDebitCards.add(new DebitCard(dateTime, startBalance, findUser(userId).verificationPersonalData()));
+    public DebitCard addDebitCard(LocalDateTime dateTime, double startBalance, UUID userId) throws Exception {
+        DebitCard debitCard = new DebitCard(dateTime, startBalance, findUser(userId).verificationPersonalData());
+        listDebitCards.add(debitCard);
         listCards.add(listDebitCards.get(listDebitCards.size() - 1));
         findUser(userId).addCard(listCards.get(listCards.size() - 1).getId());
+        return debitCard;
     }
 
     /**
@@ -166,10 +170,12 @@ public class Bank implements IObserver {
      * @param userId       UUID пользователя, которому принадлежит депозитная карта
      * @throws Exception если пользователь с указанным UUID не найден
      */
-    public void addDepositCard(LocalDateTime dateStart, LocalDateTime dataEnd, double startBalance, UUID userId) throws Exception {
-        listDepositCards.add(new DepositCard(startBalance, dataEnd, dateStart, findUser(userId).verificationPersonalData()));
+    public DepositCard addDepositCard(LocalDateTime dateStart, LocalDateTime dataEnd, double startBalance, UUID userId) throws Exception {
+        DepositCard depositCard = new DepositCard(startBalance, dataEnd, dateStart, findUser(userId).verificationPersonalData());
+        listDepositCards.add(depositCard);
         listCards.add(listDepositCards.get(listDepositCards.size() - 1));
         findUser(userId).addCard(listCards.get(listCards.size() - 1).getId());
+        return depositCard;
     }
 
     /**
